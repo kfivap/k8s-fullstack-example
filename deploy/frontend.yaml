@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-html
+  labels:
+    app: frontend-html
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend-html
+  template:
+    metadata:
+      labels:
+        app: frontend-html
+    spec:
+      containers:
+      - name: frontend-html
+        image: kfivap-front-test-app
+        ports:
+        - containerPort: 80
+        imagePullPolicy: Never
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-html-service
+  labels:
+    name: frontend-html-service
+spec:
+  type: ClusterIP
+  ports:
+    - name: frontend-html
+      port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: frontend-html

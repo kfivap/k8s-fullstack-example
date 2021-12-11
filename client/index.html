@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Server</title>
+</head>
+
+<body>
+    <h1>Test server</h1>
+    <button onclick='createUser()'>Create User</button>
+    <div id="users">Users</div>
+</body>
+<script>
+    async function getUsers() {
+        const usersResponse = await fetch('http://localhost:3000/')
+        if (usersResponse.ok) {
+            const { data: users } = await usersResponse.json()
+            document.getElementById('users').innerText = JSON.stringify(users)
+        } else {
+            alert('Http Error: ' + usersResponse.status)
+        }
+    }
+
+    async function createUser() {
+        const usersResponse = await fetch('http://localhost:3000/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ user: { name: 'new User' } })
+        })
+        if (usersResponse.ok) {
+            await getUsers()
+        } else {
+            alert('Http Error: ' + usersResponse.status)
+        }
+    }
+
+    getUsers()
+</script>
+
+</html>
