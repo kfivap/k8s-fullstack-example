@@ -18,7 +18,7 @@ spec:
       - name: backend-express
         image: kfivap-node-test-app
         ports:
-        - containerPort: 3000
+        - containerPort: 5000
         imagePullPolicy: Never
         env:
         - name: DB_URI
@@ -32,6 +32,6 @@ spec:
   selector:
     app: backend-express
   ports:
-    - port: 3000 #expose
-      targetPort: 3000 #container
+    - port: 5000 #expose
+      targetPort: 5000 #container
       protocol: TCP

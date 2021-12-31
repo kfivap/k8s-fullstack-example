@@ -1,7 +1,8 @@
 const app = require('express')()
 const { json } = require('express')
+const cors = require('cors')
 const MongoClient = require("mongodb").MongoClient;
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 5000
 const DB_URI = process.env.DB_URI || 'localhost:27017/'
 console.log({DB_URI})
 const mongoClient = new MongoClient("mongodb://"+DB_URI);
@@ -14,8 +15,13 @@ mongoClient.connect(function(err, client){
     app.locals.dbClient = client.db("mydb")
 
 });
-
+app.use(cors())
 app.use(json())
+
+app.use((req, _res, next)=>{
+    console.log(req.body, req.originalUrl)
+    next()
+})
 
 app.use((req, res, next)=>{
     res.setHeader('Access-Control-Allow-Origin', '*')

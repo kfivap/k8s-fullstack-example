@@ -15,7 +15,7 @@
 </body>
 <script>
     async function getUsers() {
-        const usersResponse = await fetch('http://localhost:3000/')
+        const usersResponse = await fetch('http://localhost:5000/api/users')
         if (usersResponse.ok) {
             const { data: users } = await usersResponse.json()
             document.getElementById('users').innerText = JSON.stringify(users)
@@ -25,7 +25,7 @@
     }
 
     async function createUser() {
-        const usersResponse = await fetch('http://localhost:3000/users', {
+        const usersResponse = await fetch('http://localhost:5000/api/users', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
